@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "watch": "nodemon ./bin/www",
+    "start": "node ./bin/www"
   },
   "dependencies": {
     "@0xpolygonid/js-sdk": "^1.4.1",
