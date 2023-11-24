@@ -2,6 +2,12 @@
 var axios = require('axios').default; // for HTTP requests
 // Include Trinsic SDK and other necessary modules
 
+import { TrinsicService } from "@trinsic/trinsic";
+
+// Initialize Trinsic ProviderServiceClient
+const trinsic = new TrinsicService({ authToken: "<auth token>" });
+
+
 // Function to fetch Stack Overflow reputation
 async function fetchStackOverflowReputation(userId) {
     try {
@@ -20,7 +26,16 @@ async function fetchStackOverflowReputation(userId) {
 // Function to issue Verified Credentials
 async function issueVerifiedCredential(reputationData) {
     try {
-        // Logic to issue VC using Trinsic SDK
+        const request = {
+            templateId: "<your-credential-template-id>",
+            include_governance: true,
+            valuesJson: JSON.stringify({
+                "userId": "<Stack Overflow User ID>",
+                "reputation": "<Reputation Value>"
+            })
+        };
+        const response = await trinsic.credential().issueFromTemplate(request);
+        
     } catch (error) {
         // Handle error
     }
