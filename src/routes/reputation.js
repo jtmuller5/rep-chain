@@ -7,7 +7,7 @@ router.get('/issue', async function(req, res, next) {
     try {
         let userId = req.query.userId;
         let reputationData = await reputationController.fetchStackOverflowReputation(userId);
-        let vc = await reputationController.issueVerifiedCredential(reputationData);
+        let vc = await reputationController.issueVerifiedCredential(userId, reputationData.reputation);
         res.send(vc);
     } catch (error) {
         res.status(500).send('Error issuing VC');

@@ -2,11 +2,12 @@
 var axios = require('axios').default; // for HTTP requests
 // Include Trinsic SDK and other necessary modules
 
-import { TrinsicService } from "@trinsic/trinsic";
+const TrinsicService = require("@trinsic/trinsic").TrinsicService;
+
+const authToken = process.env.TRINSIC_AUTH_TOKEN;
 
 // Initialize Trinsic ProviderServiceClient
-const trinsic = new TrinsicService({ authToken: "<auth token>" });
-
+const trinsic = new TrinsicService({ authToken: authToken });
 
 // Function to fetch Stack Overflow reputation
 async function fetchStackOverflowReputation(userId) {
@@ -24,22 +25,29 @@ async function fetchStackOverflowReputation(userId) {
 }
 
 // Function to issue Verified Credentials
-async function issueVerifiedCredential(reputationData) {
+async function issueVerifiedCredential(userId, reputationValue) {
     try {
+
+        let currentDate = new Date();
+
         const request = {
-            templateId: "<your-credential-template-id>",
+            templateId: "https://schema.trinsic.cloud/eloquent-bhaskara-z2gg41u9wxxg/stackoverflowreputation",
             include_governance: true,
             valuesJson: JSON.stringify({
-                "userId": "<Stack Overflow User ID>",
-                "reputation": "<Reputation Value>"
+                "userId": userId,
+                "reputation": reputationValue,
+                "checkDate": currentDate // Assuming checkDate is a string in the format 'YYYY-MM-DD'
             })
         };
         const response = await trinsic.credential().issueFromTemplate(request);
-        
+        return response; // Return the response or handle it as needed
     } catch (error) {
         // Handle error
+        console.error(error);
+        throw error; // or return a default value/error message
     }
 }
+
 
 module.exports = {
     fetchStackOverflowReputation,
