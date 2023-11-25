@@ -87,7 +87,7 @@ async function issueVerifiedCredential(userId, reputationValue, email, platform,
         let currentDate = new Date();
 
         const request = {
-            templateId: "https://schema.trinsic.cloud/eloquent-bhaskara-z2gg41u9wxxg/stack-overflow-reputation",
+            templateId: "https://schema.trinsic.cloud/eloquent-bhaskara-z2gg41u9wxxg/reputation",
             include_governance: true,
             valuesJson: JSON.stringify({
                 "User": userId,
