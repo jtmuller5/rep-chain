@@ -39,6 +39,18 @@ router.get('/issue-reddit', async function(req, res, next) {
     }
 });
 
+router.get('/issue-devto', async function(req, res, next) {
+    try {
+        let userId = req.query.userId;
+        let email = req.query.email;
+        let reputation = await reputationController.fetchDevToUserArticleCount(userId);
+        let vc = await reputationController.issueVerifiedCredential(userId, reputation, email, "Dev.to", "Articles");
+        res.send(vc);
+    } catch (error) {
+        res.status(500).send('Error issuing VC');
+    }
+});
+
 
 // New route to just fetch and return reputation value
 router.get('/value', async function(req, res, next) {
@@ -56,6 +68,9 @@ router.get('/value', async function(req, res, next) {
                 break;
             case 'reddit':
                 value = await reputationController.fetchRedditUserKarma(userId);
+                break;
+            case 'devto':
+                value = await reputationController.fetchDevToUserArticleCount(userId);
                 break;
             // Add more cases for other platforms like 'twitter', 'linkedin', etc.
             default:

@@ -57,12 +57,14 @@ async function fetchGitHubUserContributions(username) {
     }
 }
 
-async function fetchDevToUserData(username) {
+async function fetchDevToUserArticleCount(username) {
     try {
         const response = await axios.get(`https://dev.to/api/articles?username=${username}`);
-        // Process and return relevant data
+        // The response data is an array of articles
+        const articleCount = response.data.length; // Count of articles
+        return articleCount;
     } catch (error) {
-        console.error(error);
+        console.error('Error fetching Dev.to user articles:', error);
         throw error;
     }
 }
@@ -116,5 +118,6 @@ module.exports = {
     fetchStackOverflowReputation,
     fetchGitHubUserContributions,
     fetchRedditUserKarma,
+    fetchDevToUserArticleCount,
     issueVerifiedCredential
 };
