@@ -11,6 +11,7 @@
     "@trinsic/trinsic": "^1.13.0",
     "@types/axios": "^0.14.0",
     "axios": "^1.6.2",
+    "body-parser": "^1.20.2",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "dotenv": "^16.3.1",
